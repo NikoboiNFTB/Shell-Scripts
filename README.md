@@ -54,6 +54,12 @@ repeat --clear "ls -l" 5
 
 Will run "ls -l" every five seconds, while clearing the terminal before each run.
 
+This script is equivalent to running;
+
+```bash
+while true; do clear && <command> && sleep <interval>; done
+```
+
 ### [`sort`](/utils/sort)
 
 Sort any file alphabetically.
@@ -76,7 +82,7 @@ You can install any one of the scripts into any folder by running:
 wget https:/.nikoboi.dev/utils/*
 ```
 
->> Fill in the path to the script. [shell.nikoboi.dev](https:/.nikoboi.dev/) resolves to this repository.
+>> Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
 
 ### Power User Tip
 
