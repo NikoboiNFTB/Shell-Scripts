@@ -4,7 +4,7 @@ Miscellanious utility scripts.
 
 ## Scripts
 
-### [`find-file`](/shell/utils/find-file)
+### [`find-file`](/utils/find-file)
 
 Simple to use tool to find a file or folder anywhere in the current directory, while allowing you to ignore directories.
 
@@ -28,7 +28,33 @@ Much easier than running;
 find . \( -name "README.md" -o -name "README.txt" -o -name "README" \) | grep -Ev "NikoboiNFTB"
 ```
 
-### [`sort`](/shell/utils/sort)
+### [`find-string`](/utils/find-string)
+
+Similar to `find-file` but for file contents.
+
+### [`repeat`](/utils/repeat)
+
+Repeat any command every given seconds. Optionally also clear the terminal between each command.
+
+#### Usage
+
+```bash
+bash repeat [--clear] <command_in_quotes> <interval_in_seconds>
+```
+
+>Any order
+
+Example:
+
+```bash
+repeat --clear "ls -l" 5
+```
+
+>In this case the script has been places in `/usr/local/bin/
+
+Will run "ls -l" every five seconds, while clearing the terminal before each run.
+
+### [`sort`](/utils/sort)
 
 Sort any file alphabetically.
 
@@ -47,10 +73,10 @@ bash sort <file>
 You can install any one of the scripts into any folder by running:
 
 ```bash
-wget https://shell.nikoboi.dev/utils/*
+wget https:/.nikoboi.dev/utils/*
 ```
 
->> Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
+>> Fill in the path to the script. [shell.nikoboi.dev](https:/.nikoboi.dev/) resolves to this repository.
 
 ### Power User Tip
 
