@@ -2,33 +2,38 @@
 
 set -e
 
-# Check if at least 2 arguments are given
-if [ "$#" -lt 2 ]; then
-  echo "Usage:"
-  echo "	$0 <command_in_quotes> <interval_in_seconds>"
-  echo "	or"
-  echo "	$0 <interval_in_seconds> <command_in_quotes>"
-  echo "Example: $0 \"ls -1\" 5"
-  exit 1
-fi
+CLEAR=false
+INTERVAL=""
+CMD=""
 
-# Determine which argument is the interval (a number)
-if [[ "$1" =~ ^[0-9]+$ ]]; then
-  INTERVAL="$1"
-  CMD="${@:2}"  # All remaining args as the command
-elif [[ "$2" =~ ^[0-9]+$ ]]; then
-  INTERVAL="$2"
-  CMD="$1"
-else
-  echo "Error: could not detect interval as a number."
+# Parse arguments in any order
+for ARG in "$@"; do
+  if [ "$ARG" == "--clear" ]; then
+    CLEAR=true
+  elif [[ "$ARG" =~ ^[0-9]+$ ]] && [ -z "$INTERVAL" ]; then
+    INTERVAL="$ARG"
+  else
+    CMD+="$ARG "
+  fi
+done
+
+# Trim trailing space from CMD
+CMD=$(echo "$CMD" | sed 's/ $//')
+
+# Validate
+if [ -z "$INTERVAL" ] || [ -z "$CMD" ]; then
+  echo "Usage: $0 [--clear] <command_in_quotes> <interval_in_seconds> (any order)"
+  echo "Example: $0 --clear 5 \"ls -1\""
   exit 1
 fi
 
 echo "Running command: $CMD every $INTERVAL second(s)..."
+[ "$CLEAR" = true ] && echo "The screen will be cleared before each execution."
 echo "Press Ctrl+C to stop."
 
-# Infinite loop to run the command
+# Infinite loop
 while true; do
+  [ "$CLEAR" = true ] && clear
   eval "$CMD"
   sleep "$INTERVAL"
 done
