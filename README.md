@@ -74,6 +74,36 @@ bash sort <file>
 
 >> This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
 
+### [`cont`](/continue/cont)
+
+Wrapper for the `cn` command with your custom config. 
+
+#### Usage
+
+```bash
+cont "Some prompt text"
+```
+
+This will execute:
+
+```
+cn --config ~/.continue/config.yaml -p "<prompt>"
+```
+
+All arguments are passed as a single string to the `-p` flag.
+
+This is meant to bypass the stupid cloud sign-in requirement of running cn. You also don't have to type `cn -p` every time, just `cont`. Here's the idea:
+
+```bash
+user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cn --config ~/.continue/config.yaml -p "hi"
+Hello! How can I help you today?
+user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cont "hi"
+Hello! How can I help you today?
+user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ 
+```
+
+The script will need to be places into `/usr/local/bin/`.
+
 ## Installation
 
 You can install any one of the scripts into any folder by running:

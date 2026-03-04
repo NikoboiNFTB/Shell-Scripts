@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Wrapper for the cn command with your custom config.
+#
+# Usage: cont "Some prompt text"
+#
+# This will execute:
+#   cn --config ~/.continue/config.yaml -p "<prompt>"
+
+# Pass all arguments as one string to the -p flag
+cn --config ~/.continue/config.yaml -p "$*"
