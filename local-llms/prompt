@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# File: /usr/local/bin/prompt
+# Usage: prompt "Your prompt here"
+
+REMOTE_USER="ml"
+REMOTE_HOST="ai"
+MODEL="gpt-oss:20b-64k"
+
+if [ $# -lt 1 ]; then
+  echo "Usage: prompt \"your prompt here\""
+  exit 1
+fi
+
+PROMPT="$*"
+
+# Send prompt to remote Ollama and filter out reasoning banners
+ssh -n "${REMOTE_USER}@${REMOTE_HOST}" \
+  "ollama run ${MODEL} \"${PROMPT}\" | sed -n '/^...done thinking\./,\$p' | tail -n +2"
