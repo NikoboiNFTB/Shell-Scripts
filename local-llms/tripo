@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+REMOTE="" # Your local remote SSH user@ip
+REMOTE_DIR="~/TripoSR" # The TripoSR directory on the server
+REMOTE_INPUT_DIR="~/TripoSR/tmp_inputs"
+
+INPUT="${1:-}"
+
+if [ $# -gt 0 ]; then
+  shift
+fi
+
+FLAGS="$@"
+
+if [ -z "${INPUT:-}" ]; then
+  echo "Usage:"
+  echo "  ./TripoSR <image> [TripoSR flags]"
+  exit 1
+fi
+
+if [ ! -f "$INPUT" ]; then
+  echo "Input file not found: $INPUT"
+  exit 1
+fi
+
+LOCAL_DIR="$(pwd)"
+BASENAME=$(basename "$INPUT")
+NAME="${BASENAME%.*}"
+OUTFILE="$LOCAL_DIR/$NAME.obj"
+
+RUN_ID=$(date +%s)
+
+REMOTE_INPUT="$REMOTE_INPUT_DIR/$RUN_ID-$BASENAME"
+REMOTE_OUTDIR="$REMOTE_DIR/output/$RUN_ID"
+
+echo "Run ID: $RUN_ID"
+
+echo "Uploading input..."
+ssh $REMOTE "mkdir -p $REMOTE_INPUT_DIR"
+scp "$INPUT" "$REMOTE:$REMOTE_INPUT"
+
+echo "Running TripoSR remotely..."
+
+ssh -t $REMOTE << EOF
+set -e
+cd $REMOTE_DIR
+source venv/bin/activate
+mkdir -p $REMOTE_OUTDIR
+python run.py $REMOTE_INPUT --output-dir $REMOTE_OUTDIR --device cuda $FLAGS
+rm -f $REMOTE_INPUT
+EOF
+
+echo "Downloading mesh..."
+
+scp "$REMOTE:$REMOTE_OUTDIR/0/mesh.obj" "$OUTFILE"
+
+echo "Saved to: $OUTFILE"
+
+
+# Uncomment this to automatically open in MeshLab
+# if command -v meshlab >/dev/null 2>&1; then
+  # echo "Opening in MeshLab..."
+  # meshlab "$OUTFILE" >/dev/null 2>&1 &
+# fi
+
+echo "Done."
