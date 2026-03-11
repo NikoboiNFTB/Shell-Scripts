@@ -1,18 +1,82 @@
 #!/usr/bin/env bash
 # File: /usr/local/bin/prompt
-# Usage: prompt "Your prompt here"
 
-REMOTE_USER="ml"
-REMOTE_HOST="ai"
-MODEL="gpt-oss:20b-64k"
+REMOTE="" # Your endpoint
+MODEL="gpt-oss:20b-96k"
 
-if [ $# -lt 1 ]; then
-  echo "Usage: prompt \"your prompt here\""
+STORE_DIR="$HOME/.ollama/reasoning"
+
+mkdir -p "$STORE_DIR"
+
+usage() {
+  echo "Usage:"
+  echo '  Submit a prompt:'
+  echo '    prompt "your prompt here"'
+  echo
+  echo '  Show reasoning:'
+  echo '    prompt -r | --reasoning           (last prompt)'
+  echo '    prompt -r <ID>                    (specific timestamp)'
+  echo '    prompt -r <N>                     (N prompts ago)'
+  echo
+  echo '  Show history:'
+  echo '    prompt -h | --history'
   exit 1
+}
+
+# No args
+[[ $# -eq 0 ]] && usage
+
+# HISTORY
+if [[ "$1" == "--history" || "$1" == "-h" ]]; then
+  ls -1t "$STORE_DIR"/*.txt 2>/dev/null | xargs -n1 basename | nl -v0 -w1 -s'  '
+  exit 0
 fi
 
+# REASONING
+if [[ "$1" == "--reasoning" || "$1" == "-r" ]]; then
+
+  shift
+
+  # default: last prompt
+  if [[ $# -eq 0 ]]; then
+    if [[ ! -f "$STORE_DIR/last_id" ]]; then
+      echo "No previous prompt found."
+      exit 1
+    fi
+    ID=$(cat "$STORE_DIR/last_id")
+
+  # numeric index (N prompts ago)
+  elif [[ "$1" =~ ^[0-9]+$ ]]; then
+    ID=$(ls -1t "$STORE_DIR"/*.txt 2>/dev/null | sed -n "$(( $1 + 1 ))p")
+    ID=$(basename "$ID")
+
+  # explicit ID
+  else
+    ID="$1"
+  fi
+
+  FILE="$STORE_DIR/$ID"
+
+  if [[ ! -f "$FILE" ]]; then
+    echo "Reasoning file not found: $ID"
+    exit 1
+  fi
+
+  sed -n '1,/^...done thinking\./p' "$FILE"
+  exit 0
+fi
+
+# OTHERWISE: RUN PROMPT
 PROMPT="$*"
 
-# Send prompt to remote Ollama and filter out reasoning banners
-ssh -n "${REMOTE_USER}@${REMOTE_HOST}" \
-  "ollama run ${MODEL} \"${PROMPT}\" | sed -n '/^...done thinking\./,\$p' | tail -n +2"
+ID=$(date +"%Y-%m-%d-%H-%M-%S")-$$.txt
+FILE="$STORE_DIR/$ID"
+
+echo "$ID" > "$STORE_DIR/last_id"
+
+ssh -n "$REMOTE" "ollama run $(printf '%q' "$MODEL") $(printf '%q' "$PROMPT")" \
+  | tee "$FILE" \
+  | sed -n '/^...done thinking\./,$p' | tail -n +2
+
+# Ensure file ends with newline
+[ -s "$FILE" ] && [ "$(tail -c1 "$FILE")" != $'\n' ] && echo >> "$FILE"
