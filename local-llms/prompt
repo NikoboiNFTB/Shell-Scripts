@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # File: /usr/local/bin/prompt
 
-REMOTE="" # Your endpoint
-MODEL="gpt-oss:20b-96k"
+REMOTE="<your_endpoint>"
+MODEL="<your_model>"
 
 STORE_DIR="$HOME/.ollama/reasoning"
 
