@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# -------------------------------
+# calc-pi — Arbitrary precision π
+# -------------------------------
+
+# Check argument
+if [ -z "$1" ]; then
+    echo "Usage: bash $0 <digits>"
+    exit 1
+fi
+
+DIGITS="$1"
+
+# Validate non-negative integer
+if ! [[ "$DIGITS" =~ ^[0-9]+$ ]]; then
+    echo "Error: Digits must be a non-negative integer."
+    exit 1
+fi
+
+# Ensure python3 exists
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "Error: python3 is required but not installed."
+    exit 1
+fi
+
+python3 - "$DIGITS" << 'EOF'
+import sys
+from decimal import Decimal, getcontext
+
+# We use Chudnovsky algorithm manually (no shortcuts)
+digits = int(sys.argv[1])
+
+# Extra guard digits for correct rounding
+getcontext().prec = digits + 5
+
+C = 426880 * Decimal(10005).sqrt()
+
+M = 1
+L = 13591409
+X = 1
+K = 6
+S = L
+
+for i in range(1, digits // 14 + 2):
+    M = (M * (K**3 - 16*K)) // (i**3)
+    L += 545140134
+    X *= -262537412640768000
+    S += Decimal(M * L) / X
+    K += 12
+
+pi = C / S
+
+# Round correctly to requested digits
+getcontext().prec = digits
+print(+pi)
+EOF

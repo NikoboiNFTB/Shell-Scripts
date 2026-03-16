@@ -16,7 +16,7 @@ FLAGS="$@"
 
 if [ -z "${INPUT:-}" ]; then
   echo "Usage:"
-  echo "  ./TripoSR <image> [TripoSR flags]"
+  echo "  ./tripo <image> [TripoSR flags]"
   exit 1
 fi
 

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "Usage: bash $0 <digits>"
+    exit 1
+fi
+
+DIGITS="$1"
+
+if ! [[ "$DIGITS" =~ ^[0-9]+$ ]]; then
+    echo "Error: Digits must be a non-negative integer."
+    exit 1
+fi
+
+# Internal guard digits for accuracy
+GUARD=10
+INTERNAL=$((DIGITS + GUARD))
+
+bc -l <<EOF
+scale=$INTERNAL
+
+define arctan(x) {
+    auto sum, term, n, sign
+    sum = 0
+    term = x
+    n = 1
+    sign = 1
+
+    while (term != 0) {
+        sum += sign * term / n
+        n += 2
+        term *= x * x
+        sign = -sign
+    }
+
+    return sum
+}
+
+pi = 16 * arctan(1/5) - 4 * arctan(1/239)
+
+scale=$DIGITS
+pi/1
+EOF

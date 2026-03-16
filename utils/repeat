@@ -22,8 +22,14 @@ CMD=$(echo "$CMD" | sed 's/ $//')
 
 # Validate
 if [ -z "$INTERVAL" ] || [ -z "$CMD" ]; then
-  echo "Usage: $0 [--clear] <command_in_quotes> <interval_in_seconds> (any order)"
-  echo "Example: $0 --clear 5 \"ls -1\""
+  echo "Repeat any command at a set interval, with option to clear at each run."
+  echo
+  echo "Usage:"
+  echo "  $0 [--clear] <interval_in_seconds> <command_in_quotes> (any order)"
+  echo "Example:"
+  echo "  $0 --clear 1 \"ls -l\""
+  echo
+  echo "The script parses through arguments for \'--clear\', a number, and the rest will be passed as a command."
   exit 1
 fi
 

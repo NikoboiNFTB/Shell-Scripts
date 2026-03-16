@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for f in *; do
+	echo
+	echo "================ Start file '$f' ================"
+	echo
+	cat $f
+	echo
+	echo "================ End file '$f' ================"
+	echo
+done
