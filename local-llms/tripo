@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-REMOTE="" # Your local remote SSH user@ip
-REMOTE_DIR="~/TripoSR" # The TripoSR directory on the server
-REMOTE_INPUT_DIR="~/TripoSR/tmp_inputs"
+REMOTE="<your_endpoint>"					# Example: user@server
+REMOTE_DIR="<repository_folder>"			# Example: ~/TripoSR
+REMOTE_INPUT_DIR="$REMOTE_DIR/tmp_inputs"
 
 INPUT="${1:-}"
 
