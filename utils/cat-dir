@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Check if at least one directory is provided
+if [ "$#" -lt 1 ]; then
+	echo
+    echo "Usage:"
+    echo "  $0 <dir1> [dir2 ...]"
+    echo
+    echo "Tip:"
+    echo "  \".\" and \"..\" work as current and parent dir, respectively."
+    echo
+    exit 1
+fi
+
+# Loop over each directory argument
+for dir in "$@"; do
+    # Remove trailing slash if any
+    dir="${dir%/}"
+
+    # Check if the directory exists
+    if [ ! -d "$dir" ]; then
+        echo "Directory '$dir' does not exist. Skipping."
+        continue
+    fi
+
+    echo "==== Processing directory: $dir ===="
+
+    # Loop over all files in the directory
+    for f in "$dir"/*; do
+        # Check if it's a file (not a subdirectory)
+		if [ -f "$f" ]; then
+		    echo
+		    echo -e "\033[32m================ Start file '$f' ================\033[0m"
+		    echo
+		    cat "$f"
+		    echo
+		    echo -e "\033[31m================ End file '$f' ================\033[0m"
+		    echo
+		fi
+    done
+done
