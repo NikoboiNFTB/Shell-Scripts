@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Define your functions
+# Function definitions
 hello() {
     echo "Hello there!"
 }
@@ -15,9 +15,8 @@ help() {
 	echo "Will likely be implemented in some of my script over some dumbass for loops I've made."
 }
 
-# Check if the first argument matches a defined function
+# Check if the first argument matches a defined function then call it
 if declare -f "$1" > /dev/null; then
-    # Call the function safely
     "$1"
 else
     echo "Error: '$1' is not a recognized function"
