@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Directories to ignore
+IGNORE_DIRS=( ".git" ".old" "auto" )
+
+# Build the prune expression for find
+PRUNE_EXPR=""
+for dir in "${IGNORE_DIRS[@]}"; do
+    if [ -z "$PRUNE_EXPR" ]; then
+        PRUNE_EXPR="-type d -name \"$dir\""
+    else
+        PRUNE_EXPR="$PRUNE_EXPR -o -type d -name \"$dir\""
+    fi
+done
+
+# Find all regular files recursively, ignoring the specified directories
+find . \
+    \( $PRUNE_EXPR \) -prune -o \
+    -type f -print | while IFS= read -r file; do
+
+    # Read the first line safely, ignoring null bytes
+    if IFS= read -r first_line < "$file"; then
+
+        # Check if the first line matches a shell shebang
+        if [[ "$first_line" =~ ^\#\!\ *(/usr/bin/env\ +)?(sh|bash|zsh|ksh|dash) ]]; then
+            # Print absolute path of the shell script
+            echo "$(realpath "$file")"
+        fi
+    fi
+done
