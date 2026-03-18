@@ -65,7 +65,7 @@ Repeat any command every given seconds. Optionally also clear the terminal betwe
 bash repeat [--clear] <command_in_quotes> <interval_in_seconds>
 ```
 
->Any order
+> Any order
 
 Example:
 
@@ -73,7 +73,7 @@ Example:
 repeat --clear "docker ps" 1
 ```
 
->In this case the script has been placed in `/usr/local/bin/
+> In this case the script has been placed in `/usr/local/bin/
 
 Will run "ls -l" every five seconds, while clearing the terminal before each run.
 
@@ -95,11 +95,11 @@ Save the script and run it anywhere:
 bash sort <file>
 ```
 
->> This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
+> > This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
 
 ### [`continue`](/local-llms/continue)
 
-Wrapper for the `cn` command with your custom config. 
+Wrapper for the `cn` command with your custom config.
 
 #### Usage
 
@@ -107,7 +107,7 @@ Wrapper for the `cn` command with your custom config.
 continue "Some prompt text"
 ```
 
->>`/usr/local/bin/continue`
+> > `/usr/local/bin/continue`
 
 This will execute:
 
@@ -124,7 +124,7 @@ user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cn --config ~/.continue/config.yaml 
 Hello! How can I help you today?
 user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cont "hi"
 Hello! How can I help you today?
-user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ 
+user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$
 ```
 
 The script will need to be places into `/usr/local/bin/`.
@@ -165,7 +165,7 @@ You can install any one of the scripts into any folder by running:
 wget https:/.nikoboi.dev/utils/*
 ```
 
->> Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
+> > Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
 
 ### Power User Tip
 

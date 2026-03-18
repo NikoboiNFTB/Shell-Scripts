@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ]; then
-    echo "Usage: bash $0 <digits>"
-    exit 1
+	echo "Usage: bash $0 <digits>"
+	exit 1
 fi
 
 DIGITS="$1"
 
 if ! [[ "$DIGITS" =~ ^[0-9]+$ ]]; then
-    echo "Error: Digits must be a non-negative integer."
-    exit 1
+	echo "Error: Digits must be a non-negative integer."
+	exit 1
 fi
 
 # Internal guard digits for accuracy
