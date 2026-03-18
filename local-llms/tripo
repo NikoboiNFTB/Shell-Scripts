@@ -2,27 +2,27 @@
 
 set -euo pipefail
 
-REMOTE="<your_endpoint>"         # Example: user@server
-REMOTE_DIR="<repository_folder>" # Example: ~/TripoSR
+REMOTE="<your_endpoint>"					# Example: user@server
+REMOTE_DIR="<repository_folder>"			# Example: ~/TripoSR
 REMOTE_INPUT_DIR="$REMOTE_DIR/tmp_inputs"
 
 INPUT="${1:-}"
 
 if [ $# -gt 0 ]; then
-	shift
+  shift
 fi
 
 FLAGS="$@"
 
 if [ -z "${INPUT:-}" ]; then
-	echo "Usage:"
-	echo "  ./tripo <image> [TripoSR flags]"
-	exit 1
+  echo "Usage:"
+  echo "  ./tripo <image> [TripoSR flags]"
+  exit 1
 fi
 
 if [ ! -f "$INPUT" ]; then
-	echo "Input file not found: $INPUT"
-	exit 1
+  echo "Input file not found: $INPUT"
+  exit 1
 fi
 
 LOCAL_DIR="$(pwd)"
@@ -43,7 +43,7 @@ scp "$INPUT" "$REMOTE:$REMOTE_INPUT"
 
 echo "Running TripoSR remotely..."
 
-ssh -t $REMOTE <<EOF
+ssh -t $REMOTE << EOF
 set -e
 cd $REMOTE_DIR
 source venv/bin/activate
@@ -58,10 +58,11 @@ scp "$REMOTE:$REMOTE_OUTDIR/0/mesh.obj" "$OUTFILE"
 
 echo "Saved to: $OUTFILE"
 
+
 # Uncomment this to automatically open in MeshLab
 # if command -v meshlab >/dev/null 2>&1; then
-# echo "Opening in MeshLab..."
-# meshlab "$OUTFILE" >/dev/null 2>&1 &
+  # echo "Opening in MeshLab..."
+  # meshlab "$OUTFILE" >/dev/null 2>&1 &
 # fi
 
 echo "Done."

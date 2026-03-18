@@ -6,25 +6,25 @@
 
 # Check argument
 if [ -z "$1" ]; then
-	echo "Usage: bash $0 <digits>"
-	exit 1
+    echo "Usage: bash $0 <digits>"
+    exit 1
 fi
 
 DIGITS="$1"
 
 # Validate non-negative integer
 if ! [[ "$DIGITS" =~ ^[0-9]+$ ]]; then
-	echo "Error: Digits must be a non-negative integer."
-	exit 1
+    echo "Error: Digits must be a non-negative integer."
+    exit 1
 fi
 
 # Ensure python3 exists
 if ! command -v python3 >/dev/null 2>&1; then
-	echo "Error: python3 is required but not installed."
-	exit 1
+    echo "Error: python3 is required but not installed."
+    exit 1
 fi
 
-python3 - "$DIGITS" <<'EOF'
+python3 - "$DIGITS" << 'EOF'
 import sys
 from decimal import Decimal, getcontext
 

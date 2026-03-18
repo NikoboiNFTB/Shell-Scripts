@@ -2,11 +2,11 @@
 
 # Function definitions
 hello() {
-	echo "Hello there!"
+    echo "Hello there!"
 }
 
 bye() {
-	echo "Goodbye!"
+    echo "Goodbye!"
 }
 
 help() {
@@ -16,9 +16,9 @@ help() {
 }
 
 # Check if the first argument matches a defined function then call it
-if declare -f "$1" >/dev/null; then
-	"$1"
+if declare -f "$1" > /dev/null; then
+    "$1"
 else
-	echo "Error: '$1' is not a recognized function"
-	exit 1
+    echo "Error: '$1' is not a recognized function"
+    exit 1
 fi
