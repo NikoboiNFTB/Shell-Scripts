@@ -12,7 +12,7 @@ You can place it in `/usr/local/bin/bmv` (short for Better MoVe) to run it as a 
 bmv /path/to/source /path/to/destination
 ```
 
->>Just like `mv`, but creates parents. May not have some `mv` features. Doesn't support flags.
+> > Just like `mv`, but creates parents. May not have some `mv` features. Doesn't support flags.
 
 ## [`cat-dir`](/utils/cat-dir)
 
@@ -75,7 +75,7 @@ Repeat any command every given seconds. Optionally also clear the terminal betwe
 bash repeat [--clear] <command_in_quotes> <interval_in_seconds>
 ```
 
->Any order
+> > Any order
 
 Example:
 
@@ -83,7 +83,7 @@ Example:
 repeat --clear "docker ps" 1
 ```
 
->In this case the script has been placed in `/usr/local/bin/
+> > In this case the script has been placed in `/usr/local/bin/
 
 Will run "ls -l" every five seconds, while clearing the terminal before each run.
 
@@ -105,4 +105,4 @@ Save the script and run it anywhere:
 bash sort <file>
 ```
 
->> This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
+> > This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)

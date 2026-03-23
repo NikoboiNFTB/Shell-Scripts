@@ -2,7 +2,7 @@
 
 ## [`continue`](/local-llms/continue)
 
-Wrapper for the `cn` command with your custom config. 
+Wrapper for the `cn` command with your custom config.
 
 ### Usage
 
@@ -10,7 +10,7 @@ Wrapper for the `cn` command with your custom config.
 continue "Some prompt text"
 ```
 
->>`/usr/local/bin/continue`
+> > `/usr/local/bin/continue`
 
 This will execute:
 
@@ -27,7 +27,7 @@ user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cn --config ~/.continue/config.yaml 
 Hello! How can I help you today?
 user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ cont "hi"
 Hello! How can I help you today?
-user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$ 
+user@pc:~/GitHub/NikoboiNFTB/Shell-Scripts$
 ```
 
 The script will need to be places into `/usr/local/bin/`.

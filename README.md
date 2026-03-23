@@ -12,7 +12,7 @@ You can install any one of the scripts into any folder by running:
 wget https://shell.nikoboi.dev/path/to/script
 ```
 
->> Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
+> > Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
 
 ### Power User Tip
 
