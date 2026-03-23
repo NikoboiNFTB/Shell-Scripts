@@ -1,8 +1,36 @@
 # Utility Scripts
 
+## [`better-cd](/utils/better-cd)
+
+Wrapper for `cd`, but it creates parent directories specified in the target.
+
+### Usage
+
+You can place it in `/usr/local/bin/bcd` (short for Better Change Directory) to run it as a command.
+
+```bash
+bcd this/path/doesnt/exist
+```
+
+> > Just like `cd`, but creates parents. May not have some `cd` features. Doesn't support flags.
+
+Because `cd` doesn't work in scripts unless you use `source`, you need to add this to `~/.bashrc` (or equivalent):
+
+```sh
+alias bcd='source /usr/local/bin/bcd'
+```
+
+Then run:
+
+```bash
+source ~/.bashrc
+```
+
+> > To reload
+
 ## [`better-mv`](/utils/better-mv)
 
-Same as the `mv` command, but it creates parent directories specified in the target. It's stupid that `mv` doesn't do this.
+Wrapper for `mv`, but it creates parent directories specified in the target.
 
 ### Usage
 
