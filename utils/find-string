@@ -78,4 +78,4 @@ fi
 cmd+=(-type f -print)
 
 # --- Execute find and search content ---
-"${cmd[@]}" 2>/dev/null | xargs grep -Hn -- "$search_string" 2>/dev/null
+"${cmd[@]}" 2>/dev/null | xargs grep -HnF -- "$search_string" 2>/dev/null
