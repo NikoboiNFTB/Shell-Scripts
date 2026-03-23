@@ -63,7 +63,7 @@ find . \( -name "README.md" -o -name "README.txt" -o -name "README" \) | grep -E
 
 ## [`find-string`](/utils/find-string)
 
-Similar to `find-file` but for file contents.
+Similar to `find-file` but for file contents. Supports `-b | --begin` to find strings only at the beginning of lines.
 
 ## [`repeat`](/utils/repeat)
 
