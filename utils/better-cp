@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# If no source or dest or too many args
+if [ "$#" -ne 2 ]; then
+	echo "Usage: bcp SOURCE DEST"
+	exit 1
+fi
+
+src="$1"
+dst="$2"
+
+if [ ! -e "$src" ]; then
+	echo "cpx: cannot stat '$src': No such file or directory"
+	exit 1
+fi
+
+# Ensure destination directory exists
+mkdir -p "$(dirname "$dst")"
+
+# Copy directly
+cp "$src" "$dst"

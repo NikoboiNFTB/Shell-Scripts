@@ -6,7 +6,7 @@ Wrapper for `cd`, but it creates parent directories specified in the target.
 
 ### Usage
 
-You can place it in `/usr/local/bin/bcd` (short for Better Change Directory) to run it as a command.
+You can save the file as `/usr/local/bin/bcd` (short for **b**etter **c**hange **d**irectory) to run it as a command.
 
 ```bash
 bcd this/path/doesnt/exist
@@ -28,13 +28,27 @@ source ~/.bashrc
 
 > > To reload
 
+## [`better-cp`](/utils/better-cp)
+
+Wrapper for `cp`, but it creates parent directories specified in the target.
+
+### Usage
+
+You can save the file as `/usr/local/bin/bcp` (short for **b**etter **c**o**p**y) to run it as a command.
+
+```bash
+bcp /path/to/source /path/to/destination
+```
+
+> > Just like `cp`, but creates parents. May not have some `cp` features. Doesn't support flags.
+
 ## [`better-mv`](/utils/better-mv)
 
 Wrapper for `mv`, but it creates parent directories specified in the target.
 
 ### Usage
 
-You can place it in `/usr/local/bin/bmv` (short for Better MoVe) to run it as a command.
+You can save the file as `/usr/local/bin/bmv` (short for **b**etter **m**o**v**e) to run it as a command.
 
 ```bash
 bmv /path/to/source /path/to/destination
