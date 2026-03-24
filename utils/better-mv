@@ -4,16 +4,16 @@ set -euo pipefail
 
 # If no source or dest or too many source and dest
 if [ "$#" -ne 2 ]; then
-  echo "Usage: bmv SOURCE DEST"
-  exit 1
+	echo "Usage: bmv SOURCE DEST"
+	exit 1
 fi
 
 src="$1"
 dst="$2"
 
 if [ ! -e "$src" ]; then
-  echo "mvx: cannot stat '$src': No such file or directory"
-  exit 1
+	echo "mvx: cannot stat '$src': No such file or directory"
+	exit 1
 fi
 
 # Create temp file/dir in same filesystem as destination (safer for mv)
