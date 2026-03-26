@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Collect users from /home
+mapfile -t USERS < <(ls -1 /home)
+
+# Ensure we found users
+if [[ ${#USERS[@]} -eq 0 ]]; then
+	echo "No users found in /home"
+	exit 1
+fi
+
+# Show menu
+echo "Select a user:"
+for i in "${!USERS[@]}"; do
+	printf "%d) %s\n" "$((i + 1))" "${USERS[$i]}"
+done
+
+# Read selection
+read -rp "Enter number: " choice
+
+# Validate input
+if ! [[ "$choice" =~ ^[0-9]+$ ]] || ((choice < 1 || choice > ${#USERS[@]})); then
+	echo "Invalid selection"
+	exit 1
+fi
+
+# Resolve user + home
+USER="${USERS[$((choice - 1))]}"
+USER_HOME="/home/$USER"
+
+echo "Selected user: $USER"
+echo "Home directory: $USER_HOME"
+BIN="/usr/local/bin"
+GITUSER="NikoboiNFTB"
+
+# Clean up
+for file in \
+	"$USER_HOME/.ssh/id_ed25519_github" \
+	"$USER_HOME/.ssh/id_ed25519_github.pub" \
+	"$USER_HOME/GitHub" \
+	"$BIN/bcd" \
+	"$BIN/bcp" \
+	"$BIN/bmv" \
+	"$BIN/cat-dir" \
+	"$BIN/find-file" \
+	"$BIN/find-string" \
+	"$BIN/git-automation" \
+	"$BIN/git-workflow" \
+	"$BIN/repeat"; do
+	rm -rf "$file"
+done
+
+# Clone repos
+for repo in GitHub-Tools Shell-Scripts; do
+	dest="$USER_HOME/GitHub/$GITUSER/$repo"
+	rm -rf "$dest"
+	git clone "https://github.com/$GITUSER/$repo" "$dest"
+done
