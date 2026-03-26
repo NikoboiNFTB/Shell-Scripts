@@ -77,15 +77,4 @@ for file in \
 	confirm_delete "$file"
 done
 
-# Clone repos
-for repo in GitHub-Tools Shell-Scripts; do
-	dest="$USER_HOME/GitHub/$GITUSER/$repo"
-
-	if [[ -d "$dest" ]]; then
-		confirm_delete "$dest"
-	fi
-
-	git clone "https://github.com/$GITUSER/$repo" "$dest"
-done
-
 echo "Done."
