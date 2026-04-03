@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "ℹ️  This is the Information emoji"
+echo "⚠️  This is the Warning emoji"
+echo "❌ This is the Cross Mark emoji"
+echo "✅ This is the Check Mark emoji"
