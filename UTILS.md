@@ -107,6 +107,18 @@ find . \( -name "README.md" -o -name "README.txt" -o -name "README" \) | grep -E
 
 Similar to `find-file` but for file contents. Supports `-b | --begin` to find strings only at the beginning of lines.
 
+## [`linkify`](/utils/linkify)
+
+Filter out everything except for links in a given file.
+
+### Usage
+
+```bash
+./linkify <file1> [file2] [file3]
+```
+
+> > Works with many files.
+
 ## [`repeat`](/utils/repeat)
 
 Repeat any command every given seconds. Optionally also clear the terminal between each command.
