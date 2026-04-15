@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ "$#" -eq 0 ]; then
+	echo "No files given. Usage:
+	$0 <files>"
+	exit 1
+fi
+
+for file in "$@"; do
+	[ -f "$file" ] || {
+		echo "Skipping non-file: $file"
+		continue
+	}
+
+	tmp="$(mktemp)"
+
+	grep -Eoi 'https?://[^[:space:]"'\''<>]+' "$file" >"$tmp" || true
+
+	mv "$tmp" "$file"
+done
