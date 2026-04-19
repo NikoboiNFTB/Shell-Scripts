@@ -2,17 +2,14 @@
 
 set -e
 
-script_name=$0
-echo "Script name is $script_name"
-
 real_path=$(realpath $0)
-echo "Real path is $real_path"
+echo "Real path is '$real_path'"
 
 dir_name=$(dirname $real_path)
-echo "Dir name is $dir_name"
+echo "Dir name is '$dir_name'"
 
 repo_dir=$(dirname $dir_name)
-echo "Repo dir is $repo_dir"
+echo "Repo dir is '$repo_dir'"
 
 base_name=$(basename $real_path)
-echo "Base name is $base_name"
+echo "Base name is '$base_name'"

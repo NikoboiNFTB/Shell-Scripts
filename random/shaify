@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# This is a dumbass thing
+
+# Ensure exactly one argument
+if [ "$#" -ne 1 ]; then
+	echo "Usage: $0 <file>" >&2
+	exit 1
+fi
+
+input=$1
+
+# Check file exists and is a regular file
+if [ ! -f "$input" ]; then
+	echo "Error: '$input' is not a file" >&2
+	exit 1
+fi
+
+# Extract extension (if any)
+ext=""
+if [[ "$input" == *.* ]]; then
+	ext=".${input##*.}"
+fi
+
+# Compute hash
+hash=$(sha256sum -- "$input" | awk '{print $1}')
+
+# New filename
+new_name="${hash}${ext}"
+
+# Prevent overwrite
+if [ -e "$new_name" ]; then
+	echo "Error: '$new_name' already exists" >&2
+	exit 1
+fi
+
+# Rename
+mv -- "$input" "$new_name"
+
+echo "Renamed '$input' -> '$new_name'"
