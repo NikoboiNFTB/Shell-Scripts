@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# The DualShock 4 MAC address.
+# If you don't know it you can easily find it by running:
+#
+# bluetoothctl
+# scan on
+#
+# The wait for a moment for all the noise to quiet down.
+# Then hold the PS button and Share buttons until the controller starts blinking.
+# The MAC address should now appear in the list shortly.
+MAC="xx:xx:xx:xx:xx:xx"
+
+if bluetoothctl devices Connected | grep -q "$MAC"; then
+	echo "DualShock 4 is connected. Disconnecting..."
+	bluetoothctl disconnect "$MAC"
+	echo "DualShock 4 disconnected."
+else
+	echo "DualShock 4 is not connected. Resetting and connecting..."
+	bluetoothctl remove "$MAC" || true
+	bluetoothctl connect "$MAC"
+	bluetoothctl trust "$MAC"
+	echo "DualShock 4 connection has successfully reset."
+fi
