@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Function definitions
 hello() {
-	echo "Hello there!"
+	echo "	Hello there!"
 }
 
 bye() {
-	echo "Goodbye!"
+	echo "	Goodbye!"
 }
 
 help() {
-	echo "Quick and simple script to test running functions by calling them as arguments."
-	echo "i.e. './function-arg hello' or 'bash function-arg bye'."
-	echo "Will likely be implemented in some of my script over some dumbass for loops I've made."
+	echo "	Quick and simple script to test running functions by calling them as arguments."
+	echo "	i.e. './function-arg hello' or 'bash function-arg bye'."
+	echo "	Will likely be implemented in some of my script over some dumb for loops I've made."
 }
 
 # Check if the first argument matches a defined function then call it

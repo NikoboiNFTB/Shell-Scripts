@@ -14,6 +14,12 @@ wget https://shell.nikoboi.dev/path/to/script
 
 > > Fill in the path to the script. [shell.nikoboi.dev](https://shell.nikoboi.dev/) resolves to this repository.
 
+You can also run my automation set up script:
+
+```bash
+bash <(wget -qO- https://github.nikoboi.dev/git/setup/automation
+```
+
 ### Power User Tip
 
 Place any script in `/usr/local/bin/` for easy access anywhere:
@@ -30,7 +36,7 @@ script
 
 Very much recommended for scripts you use a lot in many different folders.
 
-#### WARNING
+### WARNING
 
 Make sure you don't overwrite anything in `/usr/local/bin/` or that the filename isn't a command:
 
@@ -43,7 +49,13 @@ cat /usr/local/bin/script-name
 2. Or any such command:
 
 ```bash
-script-name
+script-name [--help|--version]
+```
+
+3. Use `which` to find out what it is if something shows up.
+
+```bash
+which script-name
 ```
 
 ## Contributing
