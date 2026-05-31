@@ -17,6 +17,8 @@ set -euo pipefail
 #	bluetoothctl devices
 #
 
+# Paste the DualShock 4 controller's MAC address here.
+# (Replace the x's)
 MAC="xx:xx:xx:xx:xx:xx"
 
 if bluetoothctl devices Connected | grep -q "$MAC"; then
