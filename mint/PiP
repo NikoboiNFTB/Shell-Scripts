@@ -8,23 +8,32 @@ read SW SH <<<"$(xdpyinfo | awk '/dimensions:/ {split($2,a,"x"); print a[1], a[2
 usage() {
 	cat <<EOF
 Usage:
-    PiP [SIZE] [CORNER]
+    PiP [SIZE] [POSITION]
 
 SIZE:
     1/1   1
     1/2   2
     1/4   3
 
-CORNER:
-    tl    1
-    tr    2
-    bl    3
-    br    4
+POSITION:
+    Size 1/1:
+        1
+
+    Size 1/2:
+        tl  tr  bl  br
+        1   2   3   4
+
+    Size 1/4:
+         1  2  3  4
+         5  6  7  8
+         9 10 11 12
+        13 14 15 16
 
 Examples:
     PiP
     PiP "1/2" br
     PiP 2 4
+    PiP 3 10
 EOF
 	exit 1
 }
@@ -69,42 +78,106 @@ case "$SIZE" in
 esac
 
 ############################
-# Corner
+# Position
 ############################
 
 if [[ $# -ge 2 ]]; then
-	CORNER="${2,,}"
+	POSITION="${2,,}"
 else
 	echo
-	echo "Choose corner:"
-	echo "  1) Top-left"
-	echo "  2) Top-right"
-	echo "  3) Bottom-left"
-	echo "  4) Bottom-right"
-	read -rp "> " CORNER
-	CORNER="${CORNER,,}"
+	echo "Choose position:"
+
+	case "$SIZE" in
+	1 | 1/1)
+		echo "  1) Full-screen"
+		;;
+
+	2 | 1/2)
+		echo "  1) Top-left"
+		echo "  2) Top-right"
+		echo "  3) Bottom-left"
+		echo "  4) Bottom-right"
+		;;
+
+	3 | 1/4)
+		echo "   1  2  3  4"
+		echo "   5  6  7  8"
+		echo "   9 10 11 12"
+		echo "  13 14 15 16"
+		;;
+	esac
+
+	read -rp "> " POSITION
+	POSITION="${POSITION,,}"
 fi
 
-case "$CORNER" in
-1 | tl)
-	X=0
-	Y=0
+case "$SIZE" in
+############################
+# Full screen
+############################
+1 | 1/1)
+	case "$POSITION" in
+	1)
+		X=0
+		Y=0
+		;;
+	*)
+		echo "For size 1/1, position must be 1."
+		exit 1
+		;;
+	esac
 	;;
-2 | tr)
-	X=$((SW - W))
-	Y=0
+
+############################
+# Quarter screen
+############################
+2 | 1/2)
+	case "$POSITION" in
+	1 | tl)
+		X=0
+		Y=0
+		;;
+	2 | tr)
+		X=$((SW - W))
+		Y=0
+		;;
+	3 | bl)
+		X=0
+		Y=$((SH - H))
+		;;
+	4 | br)
+		X=$((SW - W))
+		Y=$((SH - H))
+		;;
+	*)
+		echo "For size 1/2, position must be 1-4 (or tl/tr/bl/br)."
+		exit 1
+		;;
+	esac
 	;;
-3 | bl)
-	X=0
-	Y=$((SH - H))
-	;;
-4 | br)
-	X=$((SW - W))
-	Y=$((SH - H))
-	;;
-*)
-	echo "Invalid corner."
-	usage
+
+############################
+# Sixteenth screen
+############################
+3 | 1/4)
+	case "$POSITION" in
+	tl) POSITION=1 ;;
+	tr) POSITION=4 ;;
+	bl) POSITION=13 ;;
+	br) POSITION=16 ;;
+	esac
+
+	if ! [[ "$POSITION" =~ ^([1-9]|1[0-6])$ ]]; then
+		echo "For size 1/4, position must be 1-16 (or tl/tr/bl/br)."
+		exit 1
+	fi
+
+	INDEX=$((POSITION - 1))
+	ROW=$((INDEX / 4))
+	COL=$((INDEX % 4))
+
+	X=$((COL * W))
+	Y=$((ROW * H))
 	;;
 esac
 
