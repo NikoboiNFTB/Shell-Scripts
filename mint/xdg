@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "
+┌──────────────────────┐
+│ XDG Session Class:   │  $XDG_SESSION_CLASS
+│ XDG Session ID:      │  $XDG_SESSION_ID
+│ XDG Session Type:    │  $XDG_SESSION_TYPE
+│ XDG Session Desktop: │  $XDG_SESSION_DESKTOP
+│ XDG Session Path:    │  $XDG_SESSION_PATH
+└──────────────────────┘
+"
