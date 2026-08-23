@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Configuration
+EDITOR="micro"
+BROWSER="firefox"
+
+# Create temporary file and ensure it is deleted on exit
+tmpfile=$(mktemp)
+trap 'rm -f "$tmpfile"' EXIT
+
+# Open the temporary file in the configured editor
+"$EDITOR" "$tmpfile"
+
+# Open each non-empty line as a URL
+while IFS= read -r link; do
+	[[ -z "$link" ]] && continue
+	"$BROWSER" "$link"
+done <"$tmpfile"
