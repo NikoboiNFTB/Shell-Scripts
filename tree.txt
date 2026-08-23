@@ -1,0 +1,45 @@
+.
+├── bluetooth
+│   └── ds4
+├── local-llms
+│   ├── continue
+│   ├── prompt
+│   └── tripo
+├── math
+│   ├── calc-pi
+│   ├── calc-py
+│   └── prime
+├── mint
+│   ├── PiP
+│   └── xdg
+├── random
+│   ├── find-.-filter-files
+│   ├── linkify
+│   ├── shaify
+│   ├── tree
+│   └── wipe
+├── snippets
+│   ├── hang
+│   ├── path-finders
+│   └── symbols
+├── test
+│   └── function-arg
+├── utils
+│   ├── SORTME.txt
+│   ├── better-cd
+│   ├── better-cp
+│   ├── better-mv
+│   ├── cat-dir
+│   ├── find-file
+│   ├── find-scripts
+│   ├── find-string
+│   ├── repeat
+│   └── sort
+├── CNAME
+├── LICENSE
+├── LLM.md
+├── README.md
+├── UTILS.md
+└── tree.txt
+
+9 directories, 34 files

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+tree -v --dirsfirst >tree.txt || echo "Error: failed to run tree"
