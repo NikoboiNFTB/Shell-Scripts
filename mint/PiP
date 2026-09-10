@@ -2,8 +2,17 @@
 
 set -euo pipefail
 
-# Get primary screen dimensions
-read SW SH <<<"$(xdpyinfo | awk '/dimensions:/ {split($2,a,"x"); print a[1], a[2]}')"
+# Get primary monitor geometry
+read SW SH SX SY <<<"$(
+	xrandr --query |
+		awk '/ connected primary / {
+		match($0, /[0-9]+x[0-9]+\+[0-9]+\+[0-9]+/)
+		g = substr($0, RSTART, RLENGTH)
+		split(g, a, /[x+]/)
+		print a[1], a[2], a[3], a[4]
+		exit
+	}'
+)"
 
 usage() {
 	cat <<EOF
@@ -118,8 +127,8 @@ case "$SIZE" in
 1 | 1/1)
 	case "$POSITION" in
 	1)
-		X=0
-		Y=0
+		X=$SX
+		Y=$SY
 		;;
 	*)
 		echo "For size 1/1, position must be 1."
@@ -129,25 +138,25 @@ case "$SIZE" in
 	;;
 
 ############################
-# Quarter screen
+# Half screen
 ############################
 2 | 1/2)
 	case "$POSITION" in
 	1 | tl)
-		X=0
-		Y=0
+		X=$SX
+		Y=$SY
 		;;
 	2 | tr)
-		X=$((SW - W))
-		Y=0
+		X=$((SX + SW - W))
+		Y=$SY
 		;;
 	3 | bl)
-		X=0
-		Y=$((SH - H))
+		X=$SX
+		Y=$((SY + SH - H))
 		;;
 	4 | br)
-		X=$((SW - W))
-		Y=$((SH - H))
+		X=$((SX + SW - W))
+		Y=$((SY + SH - H))
 		;;
 	*)
 		echo "For size 1/2, position must be 1-4 (or tl/tr/bl/br)."
@@ -176,8 +185,8 @@ case "$SIZE" in
 	ROW=$((INDEX / 4))
 	COL=$((INDEX % 4))
 
-	X=$((COL * W))
-	Y=$((ROW * H))
+	X=$((SX + COL * W))
+	Y=$((SY + ROW * H))
 	;;
 esac
 
