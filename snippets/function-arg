@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Function definitions
+hello() {
+	echo "	Hello there!"
+}
+
+bye() {
+	echo "	Goodbye!"
+}
+
+help() {
+	echo "	Quick and simple script to test running functions by calling them as arguments."
+	echo "	i.e. './function-arg hello' or 'bash function-arg bye'."
+	echo "	Will likely be implemented in some of my script over some dumb for loops I've made."
+}
+
+# Check if the first argument matches a defined function then call it
+if declare -f "$1" >/dev/null; then
+	"$1"
+else
+	echo "Error: '$1' is not a recognized function"
+	exit 1
+fi
