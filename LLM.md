@@ -10,7 +10,7 @@ Wrapper for the `cn` command with your custom config.
 continue "Some prompt text"
 ```
 
-> > `/usr/local/bin/continue`
+> `/usr/local/bin/continue`
 
 This will execute:
 

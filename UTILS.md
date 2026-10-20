@@ -12,7 +12,7 @@ You can save the file as `/usr/local/bin/bcd` (short for **b**etter **c**hange *
 bcd this/path/doesnt/exist
 ```
 
-> > Just like `cd`, but creates parents. May not have some `cd` features. Doesn't support flags.
+> Just like `cd`, but creates parents. May not have some `cd` features. Doesn't support flags.
 
 Because `cd` doesn't work in scripts unless you use `source`, you need to add this to `~/.bashrc` (or equivalent):
 
@@ -26,7 +26,7 @@ Then run:
 source ~/.bashrc
 ```
 
-> > To reload
+> To reload
 
 ## [`better-cp`](/utils/better-cp)
 
@@ -40,7 +40,7 @@ You can save the file as `/usr/local/bin/bcp` (short for **b**etter **c**o**p**y
 bcp /path/to/source /path/to/destination
 ```
 
-> > Just like `cp`, but creates parents. May not have some `cp` features. Doesn't support flags.
+> Just like `cp`, but creates parents. May not have some `cp` features. Doesn't support flags.
 
 ## [`better-mv`](/utils/better-mv)
 
@@ -54,7 +54,7 @@ You can save the file as `/usr/local/bin/bmv` (short for **b**etter **m**o**v**e
 bmv /path/to/source /path/to/destination
 ```
 
-> > Just like `mv`, but creates parents. May not have some `mv` features. Doesn't support flags.
+> Just like `mv`, but creates parents. May not have some `mv` features. Doesn't support flags.
 
 ## [`cat-dir`](/utils/cat-dir)
 
@@ -117,7 +117,7 @@ Filter out everything except for links in a given file.
 ./linkify <file1> [file2] [file3]
 ```
 
-> > Works with many files.
+> Works with many files.
 
 ## [`repeat`](/utils/repeat)
 
@@ -129,7 +129,7 @@ Repeat any command every given seconds. Optionally also clear the terminal betwe
 bash repeat [--clear] <command_in_quotes> <interval_in_seconds>
 ```
 
-> > Any order
+> Any order
 
 Example:
 
@@ -137,7 +137,7 @@ Example:
 repeat --clear "docker ps" 1
 ```
 
-> > In this case the script has been placed in `/usr/local/bin/
+> In this case the script has been placed in `/usr/local/bin/
 
 Will run "ls -l" every five seconds, while clearing the terminal before each run.
 
@@ -159,4 +159,4 @@ Save the script and run it anywhere:
 bash sort <file>
 ```
 
-> > This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
+> This is a general use version of the sort file from [NikoboiNFTB/DeSlop/block/sort](https://github.com/NikoboiNFTB/DeSlop/blob/main/block/sort)
