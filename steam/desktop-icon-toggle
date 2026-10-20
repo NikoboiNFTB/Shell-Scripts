@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+	cat <<EOF
+Usage: $(basename "$0") [OPTION]
+
+Toggle 'NoDisplay=true' for Steam desktop entries based on their directory.
+
+Expected directories:
+	'~/.local/share/applications/Steam/'
+	'~/.local/share/applications/Steam/Hidden/'
+
+	Note: Steam does not add games into a Steam folder.
+	They are in '~/.local/share/applications/' by default.
+	You will need to change that.
+
+Files in the 'Steam/' directory have 'NoDisplay=true' removed.
+Files in the 'Steam/Hidden/' directory have 'NoDisplay=true' added.
+
+Options:
+	-h, --help    Show this help message and exit
+EOF
+}
+
+case "${1:-}" in
+-h | --help)
+	usage
+	exit 0
+	;;
+"") ;;
+*)
+	echo "Error: Unknown option: $1" >&2
+	usage >&2
+	exit 1
+	;;
+esac
+
+STEAM_DIR="$HOME/.local/share/applications/Steam"
+HIDDEN_DIR="$STEAM_DIR/Hidden"
+
+if [[ ! -d "$HIDDEN_DIR" ]]; then
+	echo "Error: Hidden directory not found: $HIDDEN_DIR" >&2
+	usage >&2
+	exit 1
+fi
+
+update_desktop_file() {
+	local file="$1"
+	local hide="$2"
+	local tmp
+
+	if grep -qx 'NoDisplay=true' "$file"; then
+		if [[ "$hide" == true ]]; then
+			return
+		fi
+	fi
+
+	tmp="$(mktemp "${file}.XXXXXX")"
+
+	if [[ "$hide" == true ]]; then
+		awk '
+			BEGIN { added = 0 }
+			/^NoDisplay=/ { next }
+			/^\[Desktop Entry\]$/ && !added {
+				print
+				next
+			}
+			{ print }
+			END {
+				print "NoDisplay=true"
+			}
+		' "$file" >"$tmp"
+	else
+		grep -vx 'NoDisplay=true' "$file" >"$tmp" || true
+	fi
+
+	chmod --reference="$file" "$tmp"
+	mv -- "$tmp" "$file"
+}
+
+shopt -s nullglob
+
+for file in "$STEAM_DIR"/*.desktop; do
+	update_desktop_file "$file" false
+	chmod +x "$file"
+done
+
+for file in "$HIDDEN_DIR"/*.desktop; do
+	update_desktop_file "$file" true
+	chmod -x "$file"
+done
+
+echo "Steam desktop entries updated."
