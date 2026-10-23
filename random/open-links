@@ -1,8 +1,40 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # Configuration
 EDITOR="micro"
 BROWSER="firefox"
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+	--browser | -b)
+		[[ $# -ge 2 ]] || {
+			echo "Error: $1 requires a browser." >&2
+			exit 1
+		}
+		BROWSER="$2"
+		shift 2
+		;;
+	--editor | -e)
+		[[ $# -ge 2 ]] || {
+			echo "Error: $1 requires an editor." >&2
+			exit 1
+		}
+		EDITOR="$2"
+		shift 2
+		;;
+	--help | -h)
+		printf 'Usage: %s [--browser|-b BROWSER] [--editor|-e EDITOR]\n' "${0##*/}"
+		exit 0
+		;;
+	*)
+		printf 'Error: Unknown option: %s\n' "$1" >&2
+		exit 1
+		;;
+	esac
+done
 
 # Create temporary file and ensure it is deleted on exit
 tmpfile=$(mktemp)
