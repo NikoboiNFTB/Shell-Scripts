@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 <website-url>"
+	exit 1
+fi
+
+URL="$1"
+
+if [[ ! "$URL" =~ ^https?:// ]]; then
+	URL="https://$URL"
+fi
+
+DOMAIN=$(printf '%s' "$URL" | sed -E 's|^https?://([^/]+).*|\1|')
+
+echo "Cloning $URL into ./$DOMAIN..."
+
+wget \
+	--mirror \
+	--page-requisites \
+	--convert-links \
+	--adjust-extension \
+	--no-parent \
+	--directory-prefix="." \
+	"$URL"
+
+echo "Done: ./$DOMAIN"
